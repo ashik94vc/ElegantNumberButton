@@ -1,4 +1,4 @@
-# # Elegant Number Button
+# Elegant Number Button
 
 A simple Android library to implement a number counter with increment and decrement buttons. 
 
