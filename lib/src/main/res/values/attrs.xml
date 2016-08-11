@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ElegantNumberButton">
+
+        <attr name="backGroundColor" format="color"/>
+        <attr name="initialText" format="integer"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="backgroundDrawable" format="reference"/>
+    </declare-styleable>
+</resources>

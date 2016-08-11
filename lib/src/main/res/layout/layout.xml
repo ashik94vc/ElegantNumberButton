@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:background="@drawable/background"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:id="@+id/layout"
     android:layout_height="wrap_content">
     <Button
         android:id="@+id/subtract_btn"
@@ -13,6 +13,8 @@
     <TextView
         android:id="@+id/number_counter"
         android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="0dp"
         android:background="@android:color/transparent"
         android:layout_height="match_parent" />
