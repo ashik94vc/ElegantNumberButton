@@ -3,17 +3,20 @@
 A simple Android library to implement a number counter with increment and decrement buttons. 
 
 ## Screens
+
 <img src="https://github.com/ashik94vc/ElegantNumberButton/raw/master/screens/screen.png" alt="Screen 1" width="405" height="720"/>
 
 <img src="https://github.com/ashik94vc/ElegantNumberButton/raw/master/screens/screen01.gif" alt="Screen 1" width="405" height="720"/>
+
 ## Usage
 
 For Working implementation of this library check ElegantNumberButtonSample App 
-1. Just include the view as you do with any android widget
-2. Implement it in your java code as anyother widget.
-3. To get the number simply call `getNumber()` method on the button object. 
-4. To get the number from the button as soon as the button is clicked add a `setOnClickListener` to the view.
-    ```Java
+ * Just include the view as you do with any android widget.
+ * Implement it in your java code as anyother widget.
+ * To get the number simply call `getNumber()` method on the button object. 
+ * To get the number from the button as soon as the button is clicked add a `setOnClickListener` to the view.
+   
+    ```
     ElegantNumberButton button = (ElegantNumberButton) findViewById(R.id.button);
     button.setOnClickListener(new ElegantNumberButton.OnClickListener() {
             @Override
