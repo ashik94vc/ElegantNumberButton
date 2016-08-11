@@ -28,4 +28,14 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/text_view"
         android:layout_height="wrap_content" />
+
+    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+        android:id="@+id/number_button2"
+        android:layout_width="wrap_content"
+        app:backGroundColor="@color/colorAccent"
+        app:textSize="8sp"
+        android:layout_marginTop="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/number_button"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

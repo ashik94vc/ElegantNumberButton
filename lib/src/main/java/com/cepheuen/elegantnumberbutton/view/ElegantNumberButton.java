@@ -84,7 +84,7 @@ public class ElegantNumberButton extends RelativeLayout {
             drawable = defaultDrawable;
         }
         assert drawable != null;
-        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         if(Build.VERSION.SDK_INT > 16)
             mLayout.setBackground(drawable);
         else
@@ -132,7 +132,7 @@ public class ElegantNumberButton extends RelativeLayout {
     public void setNumber(String number)
     {
         this.currentNumber = Integer.parseInt(number);
-        textView.setText(currentNumber);
+        textView.setText(number);
     }
     public void setOnClickListener(OnClickListener onClickListener)
     {
