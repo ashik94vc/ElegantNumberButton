@@ -8,6 +8,14 @@ A simple Android library to implement a number counter with increment and decrem
 
 <img src="https://github.com/ashik94vc/ElegantNumberButton/raw/master/screens/screen01.gif" alt="Screen 1" width="405" height="720"/>
 
+## Download
+
+Grab the latest version on gradle using
+
+```groovy
+compile 'com.cepheuen.elegant-number-button:lib:1.0.0'
+```
+
 ## Usage
 
 For Working implementation of this library check ElegantNumberButtonSample App 
