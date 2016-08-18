@@ -1,6 +1,11 @@
-# Elegant Number Button
+<h1 align="center">Elegant Number Button</h1>
 
-A simple Android library to implement a number counter with increment and decrement buttons. 
+<p align="center">A simple Android library to implement a number counter with increment and decrement buttons. </p>
+<p align="center">
+	<a target="_blank" href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#GINGERBREAD"><img src="https://img.shields.io/badge/API-9%2B-blue.svg"/></a>
+    <a target="_blank" href="https://bintray.com/ashik94vc/maven/elegant-number-button/_latestVersion"><img src="https://api.bintray.com/packages/ashik94vc/maven/elegant-number-button/images/download.svg"/></a>
+    <a target="_blank" href="http://android-arsenal.com/details/1/4136"><img src="https://img.shields.io/badge/Android%20Arsenal-Elegant%20Number%20Button-brightgreen.svg?style=flat" border="0" alt="Android Arsenal"></a>
+</p>
 
 ## Screens
 
@@ -24,7 +29,7 @@ For Working implementation of this library check ElegantNumberButtonSample App
  * To get the number simply call `getNumber()` method on the button object. 
  * To get the number from the button as soon as the button is clicked add a `setOnClickListener` to the view.
    
-    ```
+    ```java
     ElegantNumberButton button = (ElegantNumberButton) findViewById(R.id.button);
     button.setOnClickListener(new ElegantNumberButton.OnClickListener() {
             @Override
