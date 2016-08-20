@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         final ElegantNumberButton elegantNumberButton = (ElegantNumberButton) findViewById(R.id.number_button);
         final ElegantNumberButton elegantNumberButton2 = (ElegantNumberButton) findViewById(R.id.number_button2);
         final TextView textView = (TextView) findViewById(R.id.text_view);
-
+        elegantNumberButton.setRange(1,5);
         elegantNumberButton.setOnClickListener(new ElegantNumberButton.OnClickListener() {
             @Override
             public void onClick(View view) {

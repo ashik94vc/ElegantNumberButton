@@ -26,7 +26,9 @@ public class ElegantNumberButton extends RelativeLayout {
     private AttributeSet attrs;
     private int styleAttr;
     private OnClickListener mListener;
+    private int initialNumber;
     private int currentNumber;
+    private int finalNumber;
     private TextView textView;
     private View view;
     public ElegantNumberButton(Context context) {
@@ -61,7 +63,8 @@ public class ElegantNumberButton extends RelativeLayout {
 
         TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.ElegantNumberButton,styleAttr,0);
 
-        int initialText = a.getInt(R.styleable.ElegantNumberButton_initialText,0);
+        initialNumber = a.getInt(R.styleable.ElegantNumberButton_initialNumber,0);
+        finalNumber = a.getInt(R.styleable.ElegantNumberButton_finalNumber,Integer.MAX_VALUE);
         float textSize = a.getDimension(R.styleable.ElegantNumberButton_textSize,13);
         int color = a.getColor(R.styleable.ElegantNumberButton_backGroundColor,defaultColor);
         int textColor = a.getColor(R.styleable.ElegantNumberButton_textColor,defaultTextColor);
@@ -90,9 +93,9 @@ public class ElegantNumberButton extends RelativeLayout {
         else
             mLayout.setBackgroundDrawable(drawable);
 
-        textView.setText(String.valueOf(initialText));
+        textView.setText(String.valueOf(initialNumber));
 
-        currentNumber = initialText;
+        currentNumber = initialNumber;
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +135,15 @@ public class ElegantNumberButton extends RelativeLayout {
     public void setNumber(String number)
     {
         this.currentNumber = Integer.parseInt(number);
-        textView.setText(number);
+        if(this.currentNumber > finalNumber)
+        {
+            this.currentNumber = finalNumber;
+        }
+        if(this.currentNumber < initialNumber)
+        {
+            this.currentNumber = initialNumber;
+        }
+        textView.setText(String.valueOf(currentNumber));
     }
     public void setOnClickListener(OnClickListener onClickListener)
     {
@@ -142,5 +153,10 @@ public class ElegantNumberButton extends RelativeLayout {
 
         void onClick(View view);
 
+    }
+    public void setRange(Integer startingNumber,Integer endingNumber)
+    {
+        this.initialNumber = startingNumber;
+        this.finalNumber = endingNumber;
     }
 }

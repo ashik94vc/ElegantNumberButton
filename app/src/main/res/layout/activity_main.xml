@@ -34,6 +34,8 @@
         android:layout_width="wrap_content"
         app:backGroundColor="@color/colorAccent"
         app:textSize="8sp"
+        app:initialNumber="10"
+        app:finalNumber="20"
         android:layout_marginTop="18dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/number_button"
