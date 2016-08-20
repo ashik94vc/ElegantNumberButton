@@ -18,7 +18,7 @@
 Grab the latest version on gradle using
 
 ```groovy
-compile 'com.cepheuen.elegant-number-button:lib:1.0.0'
+compile 'com.cepheuen.elegant-number-button:lib:1.0.1'
 ```
 
 ## Usage
@@ -43,13 +43,21 @@ For Working implementation of this library check ElegantNumberButtonSample App
 
 `backgroundColor` : Set button Background color
 
-`initialText`: Set initial text for the button.
+`initialNumber`: Set initial number for the button.
+
+`finalNumber` : Set final number range for button.
 
 `textColor`: Modify the text color of the button.
 
 `textSize`: Change text size of the button.
 
 `backgroundDrawable`: Add drawable background for the button.
+
+## Methods
+
+`setNumber(Integer number)`: Update the number of the widget. 
+
+`setRange(Integer startNumber, Integer finalNumber)` : Set the operational range for the widget
 
 ## Contributing
 
@@ -60,6 +68,11 @@ For Working implementation of this library check ElegantNumberButtonSample App
 5. Submit a pull request
 
 ## Changelog
+
+### Version 1.0.1
+
+* Added Range for the widget
+* Changed attribute from initialText to initialNumber
 
 ### Version 1.0
 
