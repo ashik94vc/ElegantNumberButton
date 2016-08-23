@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,10 +28,12 @@ public class ElegantNumberButton extends RelativeLayout {
     private int styleAttr;
     private OnClickListener mListener;
     private int initialNumber;
+    private int lastNumber;
     private int currentNumber;
     private int finalNumber;
     private TextView textView;
     private View view;
+    private OnValueChangeListener mOnValueChangeListener;
     public ElegantNumberButton(Context context) {
         super(context);
         this.context = context;
@@ -96,25 +99,20 @@ public class ElegantNumberButton extends RelativeLayout {
         textView.setText(String.valueOf(initialNumber));
 
         currentNumber = initialNumber;
+        lastNumber = initialNumber;
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
                 int num = Integer.valueOf(textView.getText().toString());
-                if(num != 0)
-                    num -= 1;
-                currentNumber = num;
-                textView.setText(String.valueOf(num));
-                callListener(view);
+                setNumber(String.valueOf(num-1), true);
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
                 int num = Integer.valueOf(textView.getText().toString());
-                textView.setText(String.valueOf(num+1));
-                currentNumber = num+1;
-                callListener(view);
+                setNumber(String.valueOf(num+1), true);
             }
         });
         a.recycle();
@@ -126,6 +124,14 @@ public class ElegantNumberButton extends RelativeLayout {
         {
             mListener.onClick(view);
         }
+
+        if(mOnValueChangeListener != null)
+        {
+            if(lastNumber != currentNumber)
+            {
+                mOnValueChangeListener.onValueChange(this, lastNumber, currentNumber);
+            }
+        }
     }
 
     public String getNumber()
@@ -134,6 +140,7 @@ public class ElegantNumberButton extends RelativeLayout {
     }
     public void setNumber(String number)
     {
+        lastNumber = currentNumber;
         this.currentNumber = Integer.parseInt(number);
         if(this.currentNumber > finalNumber)
         {
@@ -145,14 +152,27 @@ public class ElegantNumberButton extends RelativeLayout {
         }
         textView.setText(String.valueOf(currentNumber));
     }
+    public void setNumber(String number, boolean notifyListener){
+        setNumber(number);
+        if(notifyListener)
+        {
+            callListener(this);
+        }
+    }
     public void setOnClickListener(OnClickListener onClickListener)
     {
         this.mListener = onClickListener;
+    }
+    public void setOnValueChangeListener(OnValueChangeListener onValueChangeListener){
+        mOnValueChangeListener = onValueChangeListener;
     }
     public interface OnClickListener {
 
         void onClick(View view);
 
+    }
+    public interface OnValueChangeListener {
+        void onValueChange(ElegantNumberButton view, int oldValue, int newValue);
     }
     public void setRange(Integer startingNumber,Integer endingNumber)
     {
