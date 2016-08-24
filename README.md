@@ -18,7 +18,18 @@
 Grab the latest version on gradle using
 
 ```groovy
-compile 'com.cepheuen.elegant-number-button:lib:1.0.1'
+compile 'com.cepheuen.elegant-number-button:lib:1.0.2'
+```
+or on maven
+
+```maven
+<dependency>
+  <groupId>com.cepheuen.elegant-number-button</groupId>
+  <artifactId>lib</artifactId>
+  <version>1.0.2</version>
+  <type>pom</type>
+</dependency>
+
 ```
 
 ## Usage
@@ -38,6 +49,16 @@ For Working implementation of this library check ElegantNumberButtonSample App
             }
         });
     ```
+ * Or use a valueChangeListener to listen for changes in value.
+    
+    ```java
+    elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
+            }
+        });
+     ```
 
 ## Customization
 
@@ -59,6 +80,10 @@ For Working implementation of this library check ElegantNumberButtonSample App
 
 `setRange(Integer startNumber, Integer finalNumber)` : Set the operational range for the widget
 
+`setOnValueChangeListener(OnValueChangedListener listener)`: listen for changes in the value
+
+
+
 ## Contributing
 
 1. Fork it!
@@ -68,6 +93,10 @@ For Working implementation of this library check ElegantNumberButtonSample App
 5. Submit a pull request
 
 ## Changelog
+
+### Version 1.0.2
+
+* Added ValueChangeListener to listen for changes in values
 
 ### Version 1.0.1
 
