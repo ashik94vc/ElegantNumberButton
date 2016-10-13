@@ -30,7 +30,12 @@ public class MainActivity extends AppCompatActivity {
                 elegantNumberButton2.setNumber(number);
             }
         });
-        elegantNumberButton.setOnValueChangeListener(mOnValueChangeListener);
+        elegantNumberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
+            }
+        });
 
         elegantNumberButton2.setOnClickListener(new ElegantNumberButton.OnClickListener() {
             @Override

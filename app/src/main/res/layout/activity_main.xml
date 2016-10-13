@@ -21,7 +21,7 @@
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
         android:id="@+id/number_button"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         app:backGroundColor="@color/colorPrimary"
         app:textSize="8sp"
         android:layout_marginTop="18dp"
@@ -31,7 +31,7 @@
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
         android:id="@+id/number_button2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         app:backGroundColor="@color/colorAccent"
         app:textSize="8sp"
         app:initialNumber="10"
