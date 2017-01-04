@@ -13,6 +13,9 @@ android:
     - android-24
     - extra-android-m2repository
 
+script:
+  - ./gradlew
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
