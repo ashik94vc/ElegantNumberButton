@@ -8,6 +8,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -29,8 +30,10 @@ public class ElegantNumberButton extends RelativeLayout {
     private int currentNumber;
     private int finalNumber;
     private TextView textView;
+    private Button addBtn, subtractBtn;
     private View view;
     private OnValueChangeListener mOnValueChangeListener;
+
     public ElegantNumberButton(Context context) {
         super(context);
         this.context = context;
@@ -52,43 +55,41 @@ public class ElegantNumberButton extends RelativeLayout {
         initView();
     }
 
-    private void initView()
-    {
+    private void initView() {
         this.view = this;
-        inflate(context,R.layout.layout,this);
+        inflate(context, R.layout.layout, this);
         final Resources res = getResources();
         final int defaultColor = res.getColor(R.color.colorPrimary);
         final int defaultTextColor = res.getColor(R.color.colorText);
         final Drawable defaultDrawable = res.getDrawable(R.drawable.background);
 
-        TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.ElegantNumberButton,styleAttr,0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ElegantNumberButton, styleAttr, 0);
 
-        initialNumber = a.getInt(R.styleable.ElegantNumberButton_initialNumber,0);
-        finalNumber = a.getInt(R.styleable.ElegantNumberButton_finalNumber,Integer.MAX_VALUE);
-        float textSize = a.getDimension(R.styleable.ElegantNumberButton_textSize,13);
-        int color = a.getColor(R.styleable.ElegantNumberButton_backGroundColor,defaultColor);
-        int textColor = a.getColor(R.styleable.ElegantNumberButton_textColor,defaultTextColor);
+        initialNumber = a.getInt(R.styleable.ElegantNumberButton_initialNumber, 0);
+        finalNumber = a.getInt(R.styleable.ElegantNumberButton_finalNumber, Integer.MAX_VALUE);
+        float textSize = a.getDimension(R.styleable.ElegantNumberButton_textSize, 13);
+        int color = a.getColor(R.styleable.ElegantNumberButton_backGroundColor, defaultColor);
+        int textColor = a.getColor(R.styleable.ElegantNumberButton_textColor, defaultTextColor);
         Drawable drawable = a.getDrawable(R.styleable.ElegantNumberButton_backgroundDrawable);
 
-        Button button1 = (Button) findViewById(R.id.subtract_btn);
-        Button button2 = (Button) findViewById(R.id.add_btn);
+        subtractBtn = (Button) findViewById(R.id.subtract_btn);
+        addBtn = (Button) findViewById(R.id.add_btn);
         textView = (TextView) findViewById(R.id.number_counter);
         LinearLayout mLayout = (LinearLayout) findViewById(R.id.layout);
 
-        button1.setTextColor(textColor);
-        button2.setTextColor(textColor);
+        subtractBtn.setTextColor(textColor);
+        addBtn.setTextColor(textColor);
         textView.setTextColor(textColor);
-        button1.setTextSize(textSize);
-        button2.setTextSize(textSize);
+        subtractBtn.setTextSize(textSize);
+        addBtn.setTextSize(textSize);
         textView.setTextSize(textSize);
 
-        if(drawable == null)
-        {
+        if (drawable == null) {
             drawable = defaultDrawable;
         }
         assert drawable != null;
         drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
-        if(Build.VERSION.SDK_INT > 16)
+        if (Build.VERSION.SDK_INT > 16)
             mLayout.setBackground(drawable);
         else
             mLayout.setBackgroundDrawable(drawable);
@@ -98,82 +99,94 @@ public class ElegantNumberButton extends RelativeLayout {
         currentNumber = initialNumber;
         lastNumber = initialNumber;
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        subtractBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
                 int num = Integer.valueOf(textView.getText().toString());
-                setNumber(String.valueOf(num-1), true);
+                setNumber(String.valueOf(num - 1), true);
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
                 int num = Integer.valueOf(textView.getText().toString());
-                setNumber(String.valueOf(num+1), true);
+                setNumber(String.valueOf(num + 1), true);
             }
         });
         a.recycle();
     }
 
-    private void callListener(View view)
-    {
-        if(mListener!=null)
-        {
+    private void callListener(View view) {
+        if (mListener != null) {
             mListener.onClick(view);
         }
 
-        if(mOnValueChangeListener != null)
-        {
-            if(lastNumber != currentNumber)
-            {
+        if (mOnValueChangeListener != null) {
+            if (lastNumber != currentNumber) {
                 mOnValueChangeListener.onValueChange(this, lastNumber, currentNumber);
             }
         }
     }
 
-    public String getNumber()
-    {
+    public String getNumber() {
         return String.valueOf(currentNumber);
     }
-    public void setNumber(String number)
-    {
+
+    public void setNumber(String number) {
         lastNumber = currentNumber;
         this.currentNumber = Integer.parseInt(number);
-        if(this.currentNumber > finalNumber)
-        {
+        if (this.currentNumber > finalNumber) {
             this.currentNumber = finalNumber;
         }
-        if(this.currentNumber < initialNumber)
-        {
+        if (this.currentNumber < initialNumber) {
             this.currentNumber = initialNumber;
         }
         textView.setText(String.valueOf(currentNumber));
     }
-    public void setNumber(String number, boolean notifyListener){
+
+    public void setNumber(String number, boolean notifyListener) {
         setNumber(number);
-        if(notifyListener)
-        {
+        if (notifyListener) {
             callListener(this);
         }
     }
-    public void setOnClickListener(OnClickListener onClickListener)
-    {
+
+    public void setOnClickListener(OnClickListener onClickListener) {
         this.mListener = onClickListener;
     }
-    public void setOnValueChangeListener(OnValueChangeListener onValueChangeListener){
+
+    public void setOnValueChangeListener(OnValueChangeListener onValueChangeListener) {
         mOnValueChangeListener = onValueChangeListener;
     }
+
     public interface OnClickListener {
 
         void onClick(View view);
 
     }
+
     public interface OnValueChangeListener {
         void onValueChange(ElegantNumberButton view, int oldValue, int newValue);
     }
-    public void setRange(Integer startingNumber,Integer endingNumber)
-    {
+
+    public void setRange(Integer startingNumber, Integer endingNumber) {
         this.initialNumber = startingNumber;
         this.finalNumber = endingNumber;
+    }
+
+    public void updateColors(int backgroundColor, int textColor) {
+        this.textView.setBackgroundColor(backgroundColor);
+        this.addBtn.setBackgroundColor(backgroundColor);
+        this.subtractBtn.setBackgroundColor(backgroundColor);
+
+        this.textView.setTextColor(textColor);
+        this.addBtn.setTextColor(textColor);
+        this.subtractBtn.setTextColor(textColor);
+    }
+
+    public void updateTextSize(int unit, float newSize) {
+        this.textView.setTextSize(unit, newSize);
+        this.addBtn.setTextSize(unit, newSize);
+        this.subtractBtn.setTextSize(unit, newSize);
     }
 }
