@@ -3,10 +3,17 @@
     <declare-styleable name="ElegantNumberButton">
 
         <attr name="backGroundColor" format="color"/>
+        <attr name="minusBackgroundColor" format="color"/>
+        <attr name="plusBackgroundColor" format="color"/>
         <attr name="initialNumber" format="integer"/>
         <attr name="finalNumber" format="integer" />
         <attr name="textColor" format="color"/>
+        <attr name="minusTextColor" format="color"/>
+        <attr name="plusTextColor" format="color"/>
+        <attr name="textStyle" format="string"/>
+        <attr name="buttonTextStyle" format="string"/>
         <attr name="textSize" format="dimension"/>
+        <attr name="buttonTextSize" format="dimension"/>
         <attr name="backgroundDrawable" format="reference"/>
     </declare-styleable>
 </resources>

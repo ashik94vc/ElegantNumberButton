@@ -5,10 +5,13 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.view.GravityCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +22,7 @@ import com.cepheuen.elegantnumberbutton.R;
 
 /**
  * Created by Ashik Vetrivelu on 10/08/16.
+ * Modified by Dennis Murage on 24/03/2019
  */
 public class ElegantNumberButton extends RelativeLayout {
     private Context context;
@@ -31,7 +35,6 @@ public class ElegantNumberButton extends RelativeLayout {
     private int finalNumber;
     private TextView textView;
     private Button addBtn, subtractBtn;
-    private View view;
     private OnValueChangeListener mOnValueChangeListener;
 
     public ElegantNumberButton(Context context) {
@@ -56,7 +59,6 @@ public class ElegantNumberButton extends RelativeLayout {
     }
 
     private void initView() {
-        this.view = this;
         inflate(context, R.layout.layout, this);
         final Resources res = getResources();
         final int defaultColor = res.getColor(R.color.colorPrimary);
@@ -68,8 +70,17 @@ public class ElegantNumberButton extends RelativeLayout {
         initialNumber = a.getInt(R.styleable.ElegantNumberButton_initialNumber, 0);
         finalNumber = a.getInt(R.styleable.ElegantNumberButton_finalNumber, Integer.MAX_VALUE);
         float textSize = a.getDimension(R.styleable.ElegantNumberButton_textSize, 13);
+        float buttonTextSize = a.getDimension(R.styleable.ElegantNumberButton_buttonTextSize, 13);
+        String textStyle = "normal";
+        textStyle = a.getString(R.styleable.ElegantNumberButton_textStyle);
+        String buttonTextStyle = "normal";
+        buttonTextStyle = a.getString(R.styleable.ElegantNumberButton_buttonTextStyle);
         int color = a.getColor(R.styleable.ElegantNumberButton_backGroundColor, defaultColor);
+        int minusBackgroundColor = a.getColor(R.styleable.ElegantNumberButton_minusBackgroundColor, defaultColor);
+        int plusBackgroundColor = a.getColor(R.styleable.ElegantNumberButton_plusBackgroundColor, defaultColor);
         int textColor = a.getColor(R.styleable.ElegantNumberButton_textColor, defaultTextColor);
+        int minusTextColor = a.getColor(R.styleable.ElegantNumberButton_minusTextColor, defaultTextColor);
+        int plusTextColor = a.getColor(R.styleable.ElegantNumberButton_plusTextColor, defaultTextColor);
         Drawable drawable = a.getDrawable(R.styleable.ElegantNumberButton_backgroundDrawable);
 
         subtractBtn = (Button) findViewById(R.id.subtract_btn);
@@ -77,12 +88,28 @@ public class ElegantNumberButton extends RelativeLayout {
         textView = (TextView) findViewById(R.id.number_counter);
         LinearLayout mLayout = (LinearLayout) findViewById(R.id.layout);
 
-        subtractBtn.setTextColor(textColor);
-        addBtn.setTextColor(textColor);
+        subtractBtn.setTextColor(minusTextColor);
+        addBtn.setTextColor(plusTextColor);
         textView.setTextColor(textColor);
-        subtractBtn.setTextSize(textSize);
-        addBtn.setTextSize(textSize);
+
+        subtractBtn.setBackgroundColor(minusBackgroundColor);
+        addBtn.setBackgroundColor(plusBackgroundColor);
+        mLayout.setBackgroundColor(color);
+
+        subtractBtn.setTextSize(buttonTextSize);
+        addBtn.setTextSize(buttonTextSize);
         textView.setTextSize(textSize);
+
+        int mButtonStyle = buttonTextStyle.equals("bold") ? Typeface.BOLD :
+                buttonTextStyle.equals("italic") ? Typeface.ITALIC : Typeface.NORMAL;
+
+        int mTextStyle = textStyle.equals("bold") ? Typeface.BOLD :
+                textStyle.equals("italic") ? Typeface.ITALIC : Typeface.NORMAL;
+
+        addBtn.setTypeface(addBtn.getTypeface(), mButtonStyle);
+        subtractBtn.setTypeface(subtractBtn.getTypeface(), mButtonStyle);
+
+        textView.setTypeface(textView.getTypeface(), mTextStyle);
 
         if (drawable == null) {
             drawable = defaultDrawable;

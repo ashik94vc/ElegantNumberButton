@@ -256,3 +256,11 @@ gradle-app.setting
 .DS_Store
 /build
 /captures
+.idea/
+
+## VScode files
+.project
+.settings/
+
+###
+projectFilesBackup/
