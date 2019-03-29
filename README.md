@@ -18,7 +18,7 @@
 Grab the latest version on gradle using
 
 ```groovy
-compile 'com.cepheuen.elegant-number-button:lib:1.0.2'
+implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
 ```
 or on maven
 
@@ -62,17 +62,31 @@ For Working implementation of this library check ElegantNumberButtonSample App
 
 ## Customization
 
-`backgroundColor` : Set button Background color
+`backgroundColor` : Set the view Background color.
+
+`minusBackgroundColor` : Set the `-` control Background color.
+
+`plusBackgroundColor` : Set the `+` control Background color.
 
 `initialNumber`: Set initial number for the button.
 
 `finalNumber` : Set final number range for button.
 
-`textColor`: Modify the text color of the button.
+`textColor`: Modify the text color of the counter.
 
-`textSize`: Change text size of the button.
+`minusTextColor`: Modify the text color of the `-` control.
 
-`backgroundDrawable`: Add drawable background for the button.
+`plusTextColor`: Modify the text color of the `+` control.
+
+`textStyle`: Modify the text style of the counter to one of [Bold, Italic, Normal].
+
+`buttonTextStyle`: Modify the text style of both controls to one of [Bold, Italic, Normal].
+
+`textSize`: Change text size of the counter.
+
+`buttonTextSize`: Change text size of both the controls.
+
+`backgroundDrawable`: Add drawable background for the view.
 
 ## Methods
 
