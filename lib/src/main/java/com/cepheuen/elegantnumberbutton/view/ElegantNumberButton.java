@@ -31,7 +31,6 @@ public class ElegantNumberButton extends RelativeLayout {
     private int finalNumber;
     private TextView textView;
     private Button addBtn, subtractBtn;
-    private View view;
     private OnValueChangeListener mOnValueChangeListener;
 
     public ElegantNumberButton(Context context) {
@@ -56,7 +55,7 @@ public class ElegantNumberButton extends RelativeLayout {
     }
 
     private void initView() {
-        this.view = this;
+        View view = this;
         inflate(context, R.layout.layout, this);
         final Resources res = getResources();
         final int defaultColor = res.getColor(R.color.colorPrimary);
@@ -88,7 +87,7 @@ public class ElegantNumberButton extends RelativeLayout {
             drawable = defaultDrawable;
         }
         assert drawable != null;
-        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
+        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP));
         if (Build.VERSION.SDK_INT > 16)
             mLayout.setBackground(drawable);
         else
@@ -172,6 +171,10 @@ public class ElegantNumberButton extends RelativeLayout {
     public void setRange(Integer startingNumber, Integer endingNumber) {
         this.initialNumber = startingNumber;
         this.finalNumber = endingNumber;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+
     }
 
     public void updateColors(int backgroundColor, int textColor) {
