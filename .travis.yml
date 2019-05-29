@@ -12,7 +12,8 @@ android:
     - android-22
     - android-24
     - android-25
-    - build-tools-25.0.2
+    - android-28
+    - build-tools-28.0.2
     - extra-android-m2repository
 
 env:
@@ -23,7 +24,7 @@ env:
 before_script:
   - android-update-sdk --components=sys-img-$ABI-$API --accept-licenses='android-sdk-license-[0-9a-f]{8}'
   - echo no | android create avd --force -n test -t $API --abi $ABI -c 100M
-  - emulator -avd test -no-audio -no-window &
+  - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
