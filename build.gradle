@@ -1,11 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'checkstyle'
+
+checkstyle {
+    config = resources.text.fromFile('config/checkstyle.xml')
+}
 
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
         // NOTE: Do not place your application dependencies here; they belong
@@ -16,8 +26,22 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
+
+task Checkstyle(type: Checkstyle) {
+    config resources.text.fromString('config/checkstyle.xml')
+    source '*/src/main/java'
+    ignoreFailures false
+    showViolations true
+    include '**/*.java'
+    classpath = files()
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

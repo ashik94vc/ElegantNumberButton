@@ -1,21 +1,96 @@
+sudo: false
 language: android
 
-jdk: oraclejdk8
+jdk:
+  - oraclejdk8
+env:
+  global:
+    - ANDROID_API_LEVEL=28
+    - ANDROID_SYS=22
+    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+    - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TAG=google_apis
+    - ADB_INSTALL_TIMEOUT=20 # minutes (2 minutes by default)
 
-android:
+# Emulator Management: Create, Start and Wait
+before_install:
+  - ANDROID_TOOLS=4333796 # android-28
+  - export ANDROID_HOME=~/android-sdk
+  - |
+    if [ $TRAVIS_OS_NAME == "osx" ]; then
+      wget -q "https://dl.google.com/android/repository/sdk-tools-darwin-$ANDROID_TOOLS.zip" -O android-sdk-tools.zip
+    else
+      wget -q "https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_TOOLS.zip" -O android-sdk-tools.zip
+    fi
+  - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+  - rm android-sdk-tools.zip
+  - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+  # Silence warning.
+  - mkdir -p ~/.android
+  - touch ~/.android/repositories.cfg
+  # configure version of java on osx (Oracle java 10)
+  - |
+    if [ $TRAVIS_OS_NAME == "osx" ]; then
+    # skip brew update
+    # export HOMEBREW_NO_AUTO_UPDATE=1
+    # brew cask uninstall java; brew tap adoptopenjdk/openjdk; brew cask install adoptopenjdk8;
+    export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+    fi
+  # Accept licenses before installing components, no need to echo y for each component
+  - yes | sdkmanager --licenses
+  # Platform tools
+  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
+  - sdkmanager --list | head -15
 
-  components:
+  # Install latest canary of emulator
+  #  - rm -rf $ANDROID_HOME/emulator
+  #  - cd $ANDROID_HOME
+  #  - |
+  #    # EMULATOR_VERSION=5329922
+  #    EMULATOR_VERSION=5346014
+  #    if [ $TRAVIS_OS_NAME == "osx" ]; then
+  #      wget -q "https://dl.google.com/android/repository/emulator-darwin-$EMULATOR_VERSION.zip" -O emulator.zip
+  #    else
+  #      sudo apt-get install -y libunwind8 libc++1
+  #      wget -q "https://dl.google.com/android/repository/emulator-linux-$EMULATOR_VERSION.zip" -O emulator.zip
+  #    fi
+  #  - unzip -q emulator.zip
+  #  - cd -
 
+  # Download a pinned version of the emulator since upgrades can cause issues
+  - ${ANDROID_HOME}/emulator/emulator -version
+  #    EMULATOR_VERSION=5329922 # canary
+  #    EMULATOR_VERSION=5346014 # other canary
+  - emulator_version=5264690 # 29.0.9.0 (build_id 5537588) ==> 28.0.23.0 (build_id 5264690)
+  - |
+    if [ $TRAVIS_OS_NAME == "osx" ]; then
+      curl -fo emulator.zip "https://dl.google.com/android/repository/emulator-darwin-$emulator_version.zip"
+    else
+      sudo apt-get install -y libunwind8 libc++1
+      curl -fo emulator.zip "https://dl.google.com/android/repository/emulator-linux-$emulator_version.zip"
+    fi
+  - rm -rf "${ANDROID_HOME}/emulator"
+  - unzip -q emulator.zip -d "${ANDROID_HOME}"
+  - rm -f emulator.zip
+  - ${ANDROID_HOME}/emulator/emulator -version
 
-    - tools
-    - platform-tools
-    - build-tools-24.0.1
-    - android-24
-    - extra-android-m2repository
+  # install older packages (for emulator)
+  - sdkmanager "build-tools;25.0.2" "platforms;android-25" > /dev/null
+  # Create and start emulator.
+  - sdkmanager "system-images;android-$ANDROID_SYS;$ANDROID_ABI" > /dev/null
+  - sdkmanager --list | head -15
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-$ANDROID_SYS;$ANDROID_ABI"
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+
+before_script:
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew
-
+  - ./gradlew Checkstyle
+  - ./gradlew clean assemble
+  - ./gradlew :app:assembleDebug
+  - ./gradlew :app:connectedAndroidTest
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
