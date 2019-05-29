@@ -12,17 +12,8 @@ env:
     - ANDROID_TAG=google_apis
     - ADB_INSTALL_TIMEOUT=20 # minutes (2 minutes by default)
 
-android:
-  components:
-    - tools
-    - platform-tools
-    - android-28
-    - extra-android-support
-    - build-tools-28.0.2
-    - extra-android-m2repository
-
 # Emulator Management: Create, Start and Wait
-before_script:
+before_install:
   - ANDROID_TOOLS=4333796 # android-28
   - export ANDROID_HOME=~/android-sdk
   - |
@@ -90,6 +81,8 @@ before_script:
   - sdkmanager --list | head -15
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$ANDROID_SYS;$ANDROID_ABI"
   - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader &
+
+before_script:
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
