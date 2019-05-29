@@ -26,11 +26,11 @@ before_script:
   - ANDROID_TOOLS=4333796 # android-28
   - export ANDROID_HOME=~/android-sdk
   - |
-  if [ $TRAVIS_OS_NAME == "osx" ]; then
-  wget -q "https://dl.google.com/android/repository/sdk-tools-darwin-$ANDROID_TOOLS.zip" -O android-sdk-tools.zip
-  else
-  wget -q "https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_TOOLS.zip" -O android-sdk-tools.zip
-  fi
+    if [ $TRAVIS_OS_NAME == "osx" ]; then
+      wget -q "https://dl.google.com/android/repository/sdk-tools-darwin-$ANDROID_TOOLS.zip" -O android-sdk-tools.zip
+    else
+      wget -q "https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_TOOLS.zip" -O android-sdk-tools.zip
+    fi
   - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
   - rm android-sdk-tools.zip
   - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
@@ -39,12 +39,12 @@ before_script:
   - touch ~/.android/repositories.cfg
   # configure version of java on osx (Oracle java 10)
   - |
-  if [ $TRAVIS_OS_NAME == "osx" ]; then
-  # skip brew update
-  # export HOMEBREW_NO_AUTO_UPDATE=1
-  # brew cask uninstall java; brew tap adoptopenjdk/openjdk; brew cask install adoptopenjdk8;
-  export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-  fi
+    if [ $TRAVIS_OS_NAME == "osx" ]; then
+    # skip brew update
+    # export HOMEBREW_NO_AUTO_UPDATE=1
+    # brew cask uninstall java; brew tap adoptopenjdk/openjdk; brew cask install adoptopenjdk8;
+    export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+    fi
   # Accept licenses before installing components, no need to echo y for each component
   - yes | sdkmanager --licenses
   # Platform tools
