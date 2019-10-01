@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -113,9 +114,85 @@ public class ElegantNumberButton extends RelativeLayout {
                 setNumber(String.valueOf(num + 1), true);
             }
         });
+        
+        subtractBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                dec_pressed = true;
+                touchUpdateHandler.post( new RptUpdater() );
+                return true;
+            }
+        });
+        addBtn.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                inc_pressed = true;
+                touchUpdateHandler.post( new RptUpdater() );
+                return true;
+            }
+        });
+        subtractBtn.setOnTouchListener(TouchListener);
+        addBtn.setOnTouchListener(TouchListener);
         a.recycle();
     }
 
+    
+    //################### Auto Increment on Long Press ########################
+    private boolean inc_pressed = false;
+    private boolean dec_pressed = false;
+    private int _DELAY = 100;
+    private Handler touchUpdateHandler = new Handler();
+    //private boolean mAutoIncrement = false;
+    //private boolean mAutoDecrement = false;
+    //public int mValue;
+    class RptUpdater implements Runnable {
+        public void run() {
+            if( inc_pressed ){
+                increment();
+                touchUpdateHandler.postDelayed( new RptUpdater(), _DELAY );
+            } else if( dec_pressed ){
+                decrement();
+                touchUpdateHandler.postDelayed( new RptUpdater(), _DELAY );
+            }
+        }
+    }
+
+
+    public void decrement(){
+        int num = Integer.valueOf(textView.getText().toString());
+        setNumber(String.valueOf(num-1), true);
+    }
+
+    public void increment(){
+        int num = Integer.valueOf(textView.getText().toString());
+        setNumber(String.valueOf(num+1), true);
+    }
+
+    private View.OnTouchListener TouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View pView, MotionEvent pEvent) {
+            pView.onTouchEvent(pEvent);
+
+                if (inc_pressed) {
+                    if( (pEvent.getAction()==MotionEvent.ACTION_UP || pEvent.getAction()==MotionEvent.ACTION_CANCEL)
+                            && inc_pressed ){
+                        inc_pressed = false;
+                    }
+                }
+                else if(dec_pressed)
+                {
+                    if( (pEvent.getAction()==MotionEvent.ACTION_UP || pEvent.getAction()==MotionEvent.ACTION_CANCEL)
+                            && dec_pressed ){
+                        dec_pressed = false;
+                    }
+                }
+
+            return true;
+        }
+    };
+
+    //############# ENDS - Auto Increment on Long Press ###############
     private void callListener(View view) {
         if (mListener != null) {
             mListener.onClick(view);
