@@ -6,15 +6,12 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.cepheuen.elegantnumberbutton.R;
 
 /**
@@ -30,9 +27,9 @@ public class ElegantNumberButton extends RelativeLayout {
     private int currentNumber;
     private int finalNumber;
     private TextView textView;
-    private Button addBtn, subtractBtn;
-    private View view;
     private OnValueChangeListener mOnValueChangeListener;
+
+    public Button addBtn, subtractBtn;
 
     public ElegantNumberButton(Context context) {
         super(context);
@@ -56,14 +53,14 @@ public class ElegantNumberButton extends RelativeLayout {
     }
 
     private void initView() {
-        this.view = this;
         inflate(context, R.layout.layout, this);
         final Resources res = getResources();
         final int defaultColor = res.getColor(R.color.colorPrimary);
         final int defaultTextColor = res.getColor(R.color.colorText);
         final Drawable defaultDrawable = res.getDrawable(R.drawable.background);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ElegantNumberButton, styleAttr, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ElegantNumberButton,
+                styleAttr, 0);
 
         initialNumber = a.getInt(R.styleable.ElegantNumberButton_initialNumber, 0);
         finalNumber = a.getInt(R.styleable.ElegantNumberButton_finalNumber, Integer.MAX_VALUE);
@@ -72,10 +69,10 @@ public class ElegantNumberButton extends RelativeLayout {
         int textColor = a.getColor(R.styleable.ElegantNumberButton_textColor, defaultTextColor);
         Drawable drawable = a.getDrawable(R.styleable.ElegantNumberButton_backgroundDrawable);
 
-        subtractBtn = (Button) findViewById(R.id.subtract_btn);
-        addBtn = (Button) findViewById(R.id.add_btn);
-        textView = (TextView) findViewById(R.id.number_counter);
-        LinearLayout mLayout = (LinearLayout) findViewById(R.id.layout);
+        subtractBtn = findViewById(R.id.subtract_btn);
+        addBtn = findViewById(R.id.add_btn);
+        textView = findViewById(R.id.number_counter);
+        LinearLayout mLayout = findViewById(R.id.layout);
 
         subtractBtn.setTextColor(textColor);
         addBtn.setTextColor(textColor);
@@ -89,10 +86,7 @@ public class ElegantNumberButton extends RelativeLayout {
         }
         assert drawable != null;
         drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
-        if (Build.VERSION.SDK_INT > 16)
-            mLayout.setBackground(drawable);
-        else
-            mLayout.setBackgroundDrawable(drawable);
+        mLayout.setBackground(drawable);
 
         textView.setText(String.valueOf(initialNumber));
 
@@ -159,10 +153,9 @@ public class ElegantNumberButton extends RelativeLayout {
         mOnValueChangeListener = onValueChangeListener;
     }
 
+    @FunctionalInterface
     public interface OnClickListener {
-
         void onClick(View view);
-
     }
 
     public interface OnValueChangeListener {
