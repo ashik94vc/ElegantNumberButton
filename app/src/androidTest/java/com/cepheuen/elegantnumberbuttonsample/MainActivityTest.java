@@ -8,15 +8,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 
 import androidx.test.espresso.Espresso;
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)
 public class MainActivityTest {
     @Rule public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class,
             false, true);
