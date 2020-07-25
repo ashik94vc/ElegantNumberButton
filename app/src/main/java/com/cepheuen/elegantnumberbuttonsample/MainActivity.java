@@ -14,15 +14,15 @@ public class MainActivity extends AppCompatActivity {
     public ElegantNumberButton btn2;
     public TextView textView;
 
+    private boolean coloursChanged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         btn1 = findViewById(R.id.number_button);
-        btn1.updateColors(Color.WHITE, Color.BLACK);
         btn2 = findViewById(R.id.number_button2);
-        btn2.updateColors(Color.WHITE, Color.BLACK);
 
         textView = findViewById(R.id.text_view);
         btn1.setRange(1, 5);
@@ -39,6 +39,18 @@ public class MainActivity extends AppCompatActivity {
             String number = btn2.getNumber();
             textView.setText(number);
             btn1.setNumber(number);
+        });
+
+        findViewById(R.id.demo_button).setOnClickListener(view -> {
+            if (!coloursChanged) {
+                btn1.updateColors(Color.WHITE, Color.BLACK);
+                btn2.updateColors(Color.WHITE, Color.BLACK);
+                coloursChanged = true;
+            } else {
+                btn1.updateColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorText));
+                btn2.updateColors(getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorText));
+                coloursChanged = false;
+            }
         });
     }
 }

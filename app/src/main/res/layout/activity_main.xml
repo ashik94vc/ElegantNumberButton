@@ -14,9 +14,11 @@
         android:id="@+id/text_view"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:layout_marginBottom="18dp"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_above="@id/number_button"
         android:text="Hello World!" />
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
@@ -24,9 +26,9 @@
         android:layout_width="200dp"
         app:backGroundColor="@color/colorPrimary"
         app:textSize="8sp"
-        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/text_view"
+        android:layout_above="@id/number_button2"
         android:layout_height="wrap_content"
         tools:ignore="SmallSp" />
 
@@ -37,9 +39,17 @@
         app:textSize="8sp"
         app:initialNumber="10"
         app:finalNumber="20"
-        android:layout_marginTop="18dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/number_button"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         tools:ignore="SmallSp" />
+
+    <Button
+        android:id="@+id/demo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Colors"
+        android:layout_marginTop="58dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/number_button2"
+        tools:ignore="HardcodedText" />
 </RelativeLayout>
