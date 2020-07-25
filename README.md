@@ -1,8 +1,9 @@
 <h1 align="center">Elegant Number Button</h1>
 
 <p align="center">A simple Android library to implement a number counter with increment and decrement buttons. </p>
+<p align="center">Get the sample app <a href="https://github.com/ashik94vc/ElegantNumberButton/raw/master/.github/ElegantNumberButton%20Sample.apk">HERE</a>. </p>
 <p align="center">
-	<a target="_blank" href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#GINGERBREAD"><img src="https://img.shields.io/badge/API-9%2B-blue.svg"/></a>
+	<a target="_blank" href="https://developer.android.com/reference/android/os/Build.VERSION_CODES.html#KITKAT"><img src="https://img.shields.io/badge/API-19%2B-blue.svg"/></a>
     <a target="_blank" href="https://bintray.com/ashik94vc/maven/elegant-number-button/_latestVersion"><img src="https://api.bintray.com/packages/ashik94vc/maven/elegant-number-button/images/download.svg"/></a>
     <a target="_blank" href="http://android-arsenal.com/details/1/4136"><img src="https://img.shields.io/badge/Android%20Arsenal-Elegant%20Number%20Button-brightgreen.svg?style=flat" border="0" alt="Android Arsenal"></a>
 </p>
@@ -18,7 +19,7 @@
 Grab the latest version on gradle using
 
 ```groovy
-compile 'com.cepheuen.elegant-number-button:lib:1.0.2'
+compile 'com.cepheuen.elegant-number-button:lib:1.0.3'
 ```
 or on maven
 
@@ -26,7 +27,7 @@ or on maven
 <dependency>
   <groupId>com.cepheuen.elegant-number-button</groupId>
   <artifactId>lib</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <type>pom</type>
 </dependency>
 
@@ -34,7 +35,7 @@ or on maven
 
 ## Usage
 
-For Working implementation of this library check ElegantNumberButtonSample App 
+For working implementation of this library check [ElegantNumberButtonSample App](app)
  * Just include the view as you do with any android widget.
  * Implement it in your java code as anyother widget.
  * To get the number simply call `getNumber()` method on the button object. 

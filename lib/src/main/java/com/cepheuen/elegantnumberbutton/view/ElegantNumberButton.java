@@ -96,14 +96,14 @@ public class ElegantNumberButton extends RelativeLayout {
         subtractBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
-                int num = Integer.valueOf(textView.getText().toString());
+                int num = Integer.parseInt(textView.getText().toString());
                 setNumber(String.valueOf(num - 1), true);
             }
         });
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
-                int num = Integer.valueOf(textView.getText().toString());
+                int num = Integer.parseInt(textView.getText().toString());
                 setNumber(String.valueOf(num + 1), true);
             }
         });
