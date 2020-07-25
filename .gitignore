@@ -3,7 +3,7 @@
 
 ### Android ###
 # Built application files
-*.apk
+# *.apk
 *.ap_
 
 # Files for the ART/Dalvik VM
@@ -82,7 +82,7 @@ gradle-app.setting
 
 ### Android ###
 # Built application files
-*.apk
+# *.apk
 *.ap_
 
 # Files for the ART/Dalvik VM
