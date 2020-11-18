@@ -169,7 +169,10 @@ public class ElegantNumberButton extends RelativeLayout {
                 this.currentNumber = initialNumber;
             }
         }
-        textView.setText(String.valueOf(currentNumber));
+        if(isInteger(currentNumber))
+            textView.setText(String.valueOf(currentNumber.intValue()));
+        else
+            textView.setText(String.valueOf(currentNumber));
     }
 
     public void setNumber(String number, boolean notifyListener) {
