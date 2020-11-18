@@ -25,20 +25,22 @@ public class MainActivity extends AppCompatActivity {
         btn2.updateColors(Color.WHITE, Color.BLACK);
 
         textView = findViewById(R.id.text_view);
-        btn1.setRange(1, 5);
+        btn1.setRange(0, 5);
+        btn1.setCounterValue(0.5);
         btn1.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
             String number = btn1.getNumber();
             textView.setText(number);
-            btn2.setNumber(number);
+            //btn2.setNumber(number);
         });
         btn1.setOnValueChangeListener((view, oldValue, newValue) -> {
-            Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
+            //Log.d(TAG, String.format("oldValue: %d   newValue: %d", oldValue, newValue));
         });
-
+        btn2.setCounterValue(0.6);
+        btn2.setRange(10,20);
         btn2.setOnClickListener((ElegantNumberButton.OnClickListener) view -> {
             String number = btn2.getNumber();
             textView.setText(number);
-            btn1.setNumber(number);
+            //btn1.setNumber(number);
         });
     }
 }
