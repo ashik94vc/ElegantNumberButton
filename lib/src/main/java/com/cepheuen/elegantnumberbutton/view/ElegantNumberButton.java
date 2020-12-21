@@ -99,7 +99,7 @@ public class ElegantNumberButton extends RelativeLayout {
         subtractBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
-                Double num = Double.valueOf(textView.getText().toString());
+                Double num = currentNumber;
                 Double newVal = 0.0;
                 int newIntVal = 0;
                 if(isInteger(num - counterValue)){
@@ -115,7 +115,7 @@ public class ElegantNumberButton extends RelativeLayout {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
-                Double num = Double.valueOf(textView.getText().toString());
+                Double num = currentNumber;
                 Double newVal = 0.0;
                 int newIntVal = 0;
                 if(isInteger(num + counterValue)){
@@ -171,8 +171,12 @@ public class ElegantNumberButton extends RelativeLayout {
         }
         if(isInteger(currentNumber))
             textView.setText(String.valueOf(currentNumber.intValue()));
-        else
-            textView.setText(String.valueOf(currentNumber));
+        else{
+            String stringToSet = String.valueOf(currentNumber);
+            stringToSet = stringToSet.replace("0.5","1/2");
+            stringToSet = stringToSet.replace(".5"," 1/2");
+            textView.setText(stringToSet);
+        }
     }
 
     public void setNumber(String number, boolean notifyListener) {
