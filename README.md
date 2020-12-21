@@ -76,7 +76,9 @@ For Working implementation of this library check ElegantNumberButtonSample App
 
 ## Methods
 
-`setNumber(Integer number)`: Update the number of the widget. 
+`setNumber(Integer number)`: Update the number of the widget.
+
+`setCounter(Double number)`: Set the counter to update it by.
 
 `setRange(Integer startNumber, Integer finalNumber)` : Set the operational range for the widget
 

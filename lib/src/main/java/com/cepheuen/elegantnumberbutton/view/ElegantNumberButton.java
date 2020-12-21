@@ -7,12 +7,15 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.cepheuen.elegantnumberbutton.R;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by Ashik Vetrivelu on 10/08/16.
@@ -22,10 +25,11 @@ public class ElegantNumberButton extends RelativeLayout {
     private AttributeSet attrs;
     private int styleAttr;
     private OnClickListener mListener;
-    private int initialNumber;
-    private int lastNumber;
-    private int currentNumber;
-    private int finalNumber;
+    private Double counterValue = 1.0;
+    private double initialNumber;
+    private Double lastNumber;
+    private Double currentNumber;
+    private double finalNumber;
     private TextView textView;
     private OnValueChangeListener mOnValueChangeListener;
 
@@ -87,7 +91,6 @@ public class ElegantNumberButton extends RelativeLayout {
         assert drawable != null;
         drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
         mLayout.setBackground(drawable);
-
         textView.setText(String.valueOf(initialNumber));
 
         currentNumber = initialNumber;
@@ -96,15 +99,34 @@ public class ElegantNumberButton extends RelativeLayout {
         subtractBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
-                int num = Integer.valueOf(textView.getText().toString());
-                setNumber(String.valueOf(num - 1), true);
+                Double num = currentNumber;
+                Double newVal = 0.0;
+                int newIntVal = 0;
+                if(isInteger(num - counterValue)){
+                    newVal = (Double) (num - counterValue);
+                    newIntVal = newVal.intValue();
+                    setNumber(String.valueOf(newIntVal - counterValue), true);
+                }
+                else {
+                    setNumber(myFormat(num-counterValue), true);
+                }
             }
         });
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mView) {
-                int num = Integer.valueOf(textView.getText().toString());
-                setNumber(String.valueOf(num + 1), true);
+                Double num = currentNumber;
+                Double newVal = 0.0;
+                int newIntVal = 0;
+                if(isInteger(num + counterValue)){
+                    newVal = (Double) (num + counterValue);
+                    newIntVal = newVal.intValue();
+                    Log.d("newval", (newIntVal+ counterValue.intValue())+"");
+                    setNumber(String.valueOf((int)(newIntVal + counterValue.intValue())), true);
+                }
+                else {
+                    setNumber(myFormat(num+counterValue), true);
+                }
             }
         });
         a.recycle();
@@ -128,14 +150,33 @@ public class ElegantNumberButton extends RelativeLayout {
 
     public void setNumber(String number) {
         lastNumber = currentNumber;
-        this.currentNumber = Integer.parseInt(number);
-        if (this.currentNumber > finalNumber) {
-            this.currentNumber = finalNumber;
+        try {
+            this.currentNumber = Double.parseDouble(number);
+            Log.d("newval", (this.currentNumber)+"");
+            if (this.currentNumber > finalNumber) {
+                this.currentNumber = finalNumber;
+            }
+            if (this.currentNumber < initialNumber) {
+                this.currentNumber = initialNumber;
+            }
+        }catch (Exception e){
+            this.currentNumber = (double) Integer.parseInt(number);
+            Log.d("newval", (this.currentNumber)+"");
+            if (this.currentNumber > finalNumber) {
+                this.currentNumber = finalNumber;
+            }
+            if (this.currentNumber < initialNumber) {
+                this.currentNumber = initialNumber;
+            }
         }
-        if (this.currentNumber < initialNumber) {
-            this.currentNumber = initialNumber;
+        if(isInteger(currentNumber))
+            textView.setText(String.valueOf(currentNumber.intValue()));
+        else{
+            String stringToSet = String.valueOf(currentNumber);
+            stringToSet = stringToSet.replace("0.5","1/2");
+            stringToSet = stringToSet.replace(".5"," 1/2");
+            textView.setText(stringToSet);
         }
-        textView.setText(String.valueOf(currentNumber));
     }
 
     public void setNumber(String number, boolean notifyListener) {
@@ -159,7 +200,7 @@ public class ElegantNumberButton extends RelativeLayout {
     }
 
     public interface OnValueChangeListener {
-        void onValueChange(ElegantNumberButton view, int oldValue, int newValue);
+        void onValueChange(ElegantNumberButton view, double oldValue, double newValue);
     }
 
     public void setRange(Integer startingNumber, Integer endingNumber) {
@@ -177,9 +218,23 @@ public class ElegantNumberButton extends RelativeLayout {
         this.subtractBtn.setTextColor(textColor);
     }
 
+    public void setCounterValue(double newValue){
+        counterValue = newValue;
+    }
+
     public void updateTextSize(int unit, float newSize) {
         this.textView.setTextSize(unit, newSize);
         this.addBtn.setTextSize(unit, newSize);
         this.subtractBtn.setTextSize(unit, newSize);
+    }
+
+    public static boolean isInteger(Double bigDecimal) {
+        int intVal = bigDecimal.intValue();
+        return bigDecimal.compareTo(new Double(intVal)) == 0;
+    }
+
+    public static String myFormat(Double bigDecimal) {
+        String formatPattern = isInteger(bigDecimal) ? "#,##0" : "#,##0.0";
+        return new DecimalFormat(formatPattern).format(bigDecimal);
     }
 }
