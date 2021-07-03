@@ -177,6 +177,12 @@ public class ElegantNumberButton extends RelativeLayout {
         this.subtractBtn.setTextColor(textColor);
     }
 
+    public void setBackgroundColor(int backgroundColor) {
+        this.textView.setBackgroundColor(backgroundColor);
+        this.addBtn.setBackgroundColor(backgroundColor);
+        this.subtractBtn.setBackgroundColor(backgroundColor);
+    }
+
     public void updateTextSize(int unit, float newSize) {
         this.textView.setTextSize(unit, newSize);
         this.addBtn.setTextSize(unit, newSize);
