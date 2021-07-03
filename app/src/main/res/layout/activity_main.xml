@@ -40,4 +40,16 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/number_button"
         android:layout_height="wrap_content" />
+
+    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+        android:id="@+id/number_button3"
+        android:layout_width="match_parent"
+        app:backGroundColor="@color/colorAccent"
+        app:textSize="8sp"
+        app:initialNumber="10"
+        app:finalNumber="20"
+        android:layout_marginTop="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/number_button2"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
